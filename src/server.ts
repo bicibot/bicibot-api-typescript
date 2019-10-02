@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import signale from "signale";
 import morgan from "morgan";
+import bodyparser from "body-parser";
 require("dotenv").config();
 
 import routes from "./routes";
@@ -25,6 +26,7 @@ class App {
     this.express.use(express.json());
     this.express.use(cors());
     this.express.use(morgan("dev"));
+    this.express.use(bodyparser.json());
     this._databaseService.connect();
   }
 

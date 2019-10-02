@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { Report } from "../schemas/Report";
 
 class UserController {

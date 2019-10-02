@@ -1,4 +1,5 @@
 require("dotenv").config();
+import loggger from "../services/LoggerService";
 
 class TokenValidator {
   public async validateToken(req, res, next) {
@@ -13,6 +14,12 @@ class TokenValidator {
         };
         res.status(401).send(result);
       }
+    } else {
+      let result = {
+        error: `Authentication error. AuthToken required.`,
+        status: 401
+      };
+      res.status(401).send(result);
     }
   }
 }
