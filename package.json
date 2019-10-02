@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon src/server.ts",
     "prebuild": "rimraf dist",
-    "build": "sucrase ./src -d ./dist --transform typescript,imports"
+    "build": "sucrase ./src -d ./dist --transform typescript,imports",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "express": "^4.17.1",
     "mongoose": "^5.7.3",
     "morgan": "^1.9.1",
+    "node-geocoder": "^3.24.0",
     "signale": "^1.4.0",
     "swagger-ui-express": "^4.1.1",
     "twitter": "^1.7.1",
@@ -24,11 +26,13 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.4",
+    "@types/dotenv": "^6.1.1",
     "@types/express": "^4.16.1",
+    "@types/jest": "^24.0.18",
     "@types/mongodb": "^3.1.22",
     "@types/mongoose": "^5.3.23",
+    "@types/supertest": "^2.0.8",
     "@types/twitter": "^1.7.0",
-    "@types/dotenv": "^6.1.1",
     "@typescript-eslint/eslint-plugin": "^1.4.2",
     "@typescript-eslint/parser": "^1.4.2",
     "eslint": "^5.15.3",
@@ -39,11 +43,14 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.9.0",
     "joi": "^14.3.1",
     "nodemon": "^1.18.10",
     "prettier": "^1.16.4",
     "rimraf": "^2.6.3",
     "sucrase": "^3.10.0",
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.1.0",
     "twitter-d": "^0.4.0",
     "typescript": "^3.3.3333"
   }
