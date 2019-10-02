@@ -1,5 +1,6 @@
 export interface ReportInterface {
-  email?: string;
-  firstName?: string;
-  lastName?: string;
+  description?: string;
+  city?: string;
+  report_type?: string;
+  location?: Array<string>;
 }
