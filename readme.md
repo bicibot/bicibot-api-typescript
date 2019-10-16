@@ -2,9 +2,9 @@
 
 ## Todo:
 
-- [ ] Update Report Schema
-- [ ] Update Report Interface
-- [ ] Update TwitterService
+- [x] Update Report Schema
+- [x] Update Report Interface
+- [x] Update TwitterService
 - [ ] Implement Logging
 - [ ] Implement Sentry error logging
 - [ ] Injection Dependency(maybe?)
