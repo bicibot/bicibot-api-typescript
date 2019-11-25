@@ -13,7 +13,6 @@ const ReportSchema = new Schema(
     city: {
       type: String,
       required: true,
-      enum: ["Recife", "São Paulo"],
       trim: true
     },
     report_type: {
