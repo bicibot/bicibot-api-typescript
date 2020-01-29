@@ -17,7 +17,7 @@ class UserController {
     try {
       const reportDTO = req.body
       const reportRecord = await Report.create(reportDTO)
-      this.twitterService.tweet(reportRecord)
+      await this.twitterService.tweet(reportRecord)
       return res.status(201).json(reportRecord)
     } catch { }
   }
