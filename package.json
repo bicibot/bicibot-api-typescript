@@ -7,7 +7,7 @@
     "dev": "nodemon src/server.ts",
     "prebuild": "rimraf dist",
     "build": "sucrase ./src -d ./dist --transform typescript,imports",
-    "test": "jest"
+    "test": "jest --no-cache"
   },
   "author": "",
   "license": "ISC",
@@ -36,10 +36,11 @@
     "@types/twitter": "^1.7.0",
     "@typescript-eslint/eslint-plugin": "^1.4.2",
     "@typescript-eslint/parser": "^1.4.2",
-    "eslint": "^5.15.3",
+    "eslint": "^6.8.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jest": "^23.6.0",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-promise": "^4.0.1",

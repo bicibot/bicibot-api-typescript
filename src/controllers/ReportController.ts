@@ -2,7 +2,7 @@ import { Request, Response } from "express"
 import { Report } from "../schemas/Report"
 import TwitterService from "../services/TwitterService"
 
-class UserController {
+class ReportController {
   private twitterService: TwitterService;
 
   public constructor () {
@@ -23,4 +23,4 @@ class UserController {
   }
 }
 
-export default new UserController()
+export default new ReportController()
