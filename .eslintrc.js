@@ -18,5 +18,9 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module"
   },
-  rules: {}
+  rules: {
+    "quotes": [2, "double", { "avoidEscape": true }],
+    "camelcase": "off",
+    "@typescript-eslint/camelcase": ["error", { "properties": "never" }]
+  }
 };

@@ -1,5 +1,5 @@
-import { Document, Schema, Model, model } from "mongoose";
-import { ReportInterface } from "../interfaces/Report";
+import { Document, Schema, Model, model } from "mongoose"
+import { ReportInterface } from "../interfaces/Report"
 
 export interface ReportModel extends ReportInterface, Document {}
 
@@ -25,13 +25,13 @@ const ReportSchema = new Schema(
       type: String,
       trim: true,
       validate: {
-        validator: function(p: String) {
-          return /^[a-zA-Z]{3}[0-9]{4}\b/.test(p.replace("-", ""));
+        validator: (p: string): boolean => {
+          return /^[a-zA-Z]{3}[0-9]{4}\b/.test(p.replace("-", ""))
         },
-        message: props => `${props.value} não é uma placa valida!`
+        message: (props): string => `${props.value} não é uma placa valida!`
       }
     },
-    maintenace_type: {
+    maintenance_type: {
       type: String,
       enum: ["Pintura", "Buraco", "Proteção", "Cruzamento", "Semáforo"],
       trim: true
@@ -68,9 +68,9 @@ const ReportSchema = new Schema(
   {
     timestamps: true
   }
-);
+)
 
 export const Report: Model<ReportModel> = model<ReportModel>(
   "Report",
   ReportSchema
-);
+)

@@ -1,26 +1,26 @@
-import { Request, Response } from "express";
-import { Report } from "../schemas/Report";
-import { ReportInterface } from "../interfaces/Report";
-import TwitterService from "../services/TwitterService";
+import { Request, Response } from "express"
+import { Report } from "../schemas/Report"
+import TwitterService from "../services/TwitterService"
 
 class UserController {
   private twitterService: TwitterService;
 
-  public constructor() {
-    this.twitterService = new TwitterService();
+  public constructor () {
+    this.twitterService = new TwitterService()
   }
-  public async index(res: Response): Promise<Response> {
-    const reports = await Report.find();
-    return res.json(reports);
+  public async index (req: Request, res: Response): Promise<Response> {
+    const reports = await Report.find()
+    return res.status(200).json(reports)
   }
 
-  public async store(report: ReportInterface) {
+  public async store (req: Request, res: Response): Promise<Response> {
     try {
-      const reportRecord = await Report.create(report);
-      this.twitterService.tweet(reportRecord);
-      return { report: reportRecord };
-    } catch {}
+      const reportDTO = req.body
+      const reportRecord = await Report.create(reportDTO)
+      this.twitterService.tweet(reportRecord)
+      return res.status(201).json(reportRecord)
+    } catch { }
   }
 }
 
-export default new UserController();
+export default new UserController()

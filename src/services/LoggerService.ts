@@ -1,5 +1,5 @@
-import { createLogger, format, transports } from "winston";
-const { label, combine, timestamp, prettyPrint } = format;
+import { createLogger, format, transports } from "winston"
+const { combine, timestamp, prettyPrint } = format
 const logger = createLogger({
   format: combine(timestamp(), prettyPrint()),
   transports: [
@@ -8,6 +8,6 @@ const logger = createLogger({
     new transports.File({ filename: "./info.log", level: "info" })
   ],
   exitOnError: false
-});
+})
 
-export default logger;
+export default logger

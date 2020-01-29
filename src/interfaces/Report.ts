@@ -2,7 +2,7 @@ export interface ReportInterface {
   description?: string;
   city?: string;
   report_type?: string;
-  location?: Array<string>;
+  location?: string[];
   plate?: string;
   maintenance_type?: string;
   invasion_state?: string;

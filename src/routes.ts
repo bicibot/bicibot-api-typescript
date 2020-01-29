@@ -1,20 +1,15 @@
-import { Router } from "express";
-import swaggerUi from "swagger-ui-express";
-import ReportController from "./controllers/ReportController";
-import TokenValidator from "./utils/tokenValidator";
+import { Router } from "express"
+import swaggerUi from "swagger-ui-express"
+import ReportController from "./controllers/ReportController"
+import TokenValidator from "./utils/tokenValidator"
 
-const routes = Router();
+const routes = Router()
 
-routes.use("/docs", swaggerUi.serve);
-routes.get("/docs", swaggerUi.setup());
+routes.use("/docs", swaggerUi.serve)
+routes.get("/docs", swaggerUi.setup())
 
-routes.get("/denuncias", TokenValidator.validateToken, ReportController.index);
+routes.get("/denuncias", ReportController.index)
 
-routes.post("/denuncias", TokenValidator.validateToken, async (req, res) => {
-  const reportDTO = req.body;
-  const report = ReportController.store(reportDTO);
+routes.post("/denuncias", TokenValidator.validateToken, ReportController.store)
 
-  return res.json({ report });
-});
-
-export default routes;
+export default routes
