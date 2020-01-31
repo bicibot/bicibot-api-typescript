@@ -1,13 +1,18 @@
-import { createLogger, format, transports } from "winston"
+// TODO: Create LoggerService and consume ingestToken from .env
+import { createLogger, format } from "winston"
+import HumioTransport from "humio-winston"
+
 const { combine, timestamp, prettyPrint } = format
 const logger = createLogger({
   format: combine(timestamp(), prettyPrint()),
   transports: [
-    new transports.Console(),
-    new transports.File({ filename: "./error.log", level: "error" }),
-    new transports.File({ filename: "./info.log", level: "info" })
+    new HumioTransport({
+      ingestToken: ""
+    })
   ],
   exitOnError: false
 })
+
+logger.info("Hello, world!")
 
 export default logger

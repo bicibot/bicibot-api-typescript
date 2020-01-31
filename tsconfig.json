@@ -4,5 +4,6 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "lib": [ "es2015" ]
-  }
+  },
+  "include": ["src", "__tests__"]
 }

@@ -6,6 +6,7 @@ import cors from "cors"
 import signale from "signale"
 import morgan from "morgan"
 import bodyparser from "body-parser"
+import MailerService from "./services/MailerService"
 require("dotenv").config()
 
 const PORT = process.env.port || 3333
@@ -15,9 +16,12 @@ class App {
 
   private _databaseService: DatabaseService;
 
+  private _mailerService: MailerService;
+
   public constructor () {
     this.express = express()
     this._databaseService = new DatabaseService()
+    this._mailerService = new MailerService()
     this.middlewares()
     this.routes()
   }
