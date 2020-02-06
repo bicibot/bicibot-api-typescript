@@ -8,5 +8,5 @@
 - [ ] Implement Logging
 - [ ] Implement Sentry error logging
 - [ ] Injection Dependency(maybe?)
-- [ ] Create PDF Report Service with a Mailer and Cron job
-- [ ] WRITE TESTRING!
+- [x] Create PDF Report Service with a Mailer and Cron job
+- [ ] WRITE TESTING!
