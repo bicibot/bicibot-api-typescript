@@ -24,7 +24,7 @@ class MailerService {
 
       cron.schedule("*/10 * * * * *", () => {
         signale.info("Sending email report")
-        this.sendMail("iacapuca@gmail.com")
+        this.sendMail(process.env.TO_EMAIL)
       })
     }
 
