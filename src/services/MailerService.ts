@@ -2,6 +2,7 @@ import cron from "node-cron"
 import signale from "signale"
 import sgMail from "@sendgrid/mail"
 import PDFService from "./PDFService"
+import moment from "moment"
 
 // TODO: Create Email facade and use OOP better practices on this Service
 
@@ -9,6 +10,10 @@ class MailerService {
     protected sendGrid: any;
 
     private _PDFService: PDFService;
+
+    public static FROM_EMAIL: string = "no-reply@bicibot.org";
+    public static FROM_NAME: string = "Bicibot";
+    public static CONTENT: string = "Segue em anexo relátorio da semana"
 
     /**
      * @constructor
@@ -19,20 +24,27 @@ class MailerService {
 
       cron.schedule("*/10 * * * * *", () => {
         signale.info("Sending email report")
-        this.sendMail("iacapuca@gmail.com", "no-reply@bicibot.org", "Email test", "Testando envio do email")
+        this.sendMail("iacapuca@gmail.com")
       })
     }
 
-    public async sendMail (to: string, from: string, subject: string, content: string): Promise<void> {
+    public getSubject () {
+      const today = moment()
+      let fromDate = today.startOf("week").format("DD/MM/YYYY")
+      let toDate = today.endOf("week").format("DD/MM/YYYY")
+      return `Relátorio Bicibot ${fromDate} - ${toDate}`
+    }
+
+    private async sendMail (to: string): Promise<void> {
       const pdf = await this._PDFService.generateReport()
       const msg = { to: to,
-        from: from,
-        subject: subject,
-        text: content,
+        from: { email: MailerService.FROM_EMAIL, name: MailerService.FROM_NAME },
+        subject: this.getSubject(),
+        text: MailerService.CONTENT,
         attachments: [
           {
             content: Buffer.from(pdf).toString("base64"),
-            filename: "report.pdf",
+            filename: "Bicibot - Report.pdf",
             type: "application/pdf",
             disposition: "attachment"
           }
