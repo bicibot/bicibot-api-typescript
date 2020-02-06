@@ -1,56 +1,58 @@
 import cron from "node-cron"
 import signale from "signale"
-import * as nodemailer from "nodemailer"
-
-// TODO: Implement mailer and send reportMail every week
-// Create PDF file that should be send with the mail, the content of the PDF should be the report as a table
+import sgMail from "@sendgrid/mail"
+import PDFService from "./PDFService"
+import moment from "moment"
 
 class MailerService {
-    private config;
-    private _transporter: nodemailer.Transporter;
-    private mailOptions;
+    protected sendGrid: any;
 
+    private _PDFService: PDFService;
+
+    public static FROM_EMAIL: string = "no-reply@bicibot.org";
+    public static FROM_NAME: string = "Bicibot";
+    public static CONTENT: string = "Segue em anexo relátorio da semana"
+
+    /**
+     * @constructor
+     */
     public constructor () {
-      this._transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        auth: {
-          user: "florencio.fritsch@ethereal.email",
-          pass: "e3Pexw282zmsDWSm9C"
-        }
-      })
+      this._PDFService = new PDFService()
+      this.sendGrid = sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
-      this.mailOptions = {
-        from: "from_test@gmail.com",
-        to: "iacapuca@gmail.com",
-        subject: "Hello",
-        text: "Hello from node.js"
-      }
-
-      cron.schedule("* * * * *", () => {
+      cron.schedule("*/10 * * * * *", () => {
         signale.info("Sending email report")
-        this.sendMail("iacapuca@gmail.com", "Email test", "Testando envio do email").then((msg) => {
-          console.log(msg);
-        })
+        this.sendMail(process.env.TO_EMAIL)
       })
     }
 
-    public async sendMail (to: string, subject: string, content: string): Promise<void> {
-      this.mailOptions.to = to
-      this.mailOptions.subject = subject
-      this.mailOptions.text = content
+    public getSubject () {
+      const today = moment()
+      let fromDate = today.startOf("week").format("DD/MM/YYYY")
+      let toDate = today.endOf("week").format("DD/MM/YYYY")
+      return `Relátorio Bicibot ${fromDate} - ${toDate}`
+    }
 
-      return new Promise<void>((resolve: (msg: any) => void,
-        reject: (err: Error) => void) => {
-        this._transporter.sendMail(
-          this.mailOptions, (error, info) => {
-            if (error) {
-              signale.fatal(`error: ${error}`)
-              reject(error)
-            } else {
-              signale.success(`Message Sent ${info.response}`)
-            }
-          })
+    private async sendMail (to: string): Promise<void> {
+      const pdf = await this._PDFService.generateReport()
+      const msg = { to: to,
+        from: { email: MailerService.FROM_EMAIL, name: MailerService.FROM_NAME },
+        subject: this.getSubject(),
+        text: MailerService.CONTENT,
+        attachments: [
+          {
+            content: Buffer.from(pdf).toString("base64"),
+            filename: "Bicibot - Report.pdf",
+            type: "application/pdf",
+            disposition: "attachment"
+          }
+        ]
+      }
+
+      sgMail.send(msg).then(() => {
+        signale.success("Email sent")
+      }, err => {
+        signale.fatal(err)
       })
     }
 }
