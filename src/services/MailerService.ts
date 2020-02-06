@@ -1,16 +1,22 @@
 import cron from "node-cron"
 import signale from "signale"
 import * as nodemailer from "nodemailer"
+import PDFService from "./PDFService"
 
 // TODO: Implement mailer and send reportMail every week
-// Create PDF file that should be send with the mail, the content of the PDF should be the report as a table
+// Send reports for the current week, if there are not reports, then send a message sayind that
 
 class MailerService {
     private config;
+
     private _transporter: nodemailer.Transporter;
+
     private mailOptions;
 
+    private _PDFService: PDFService;
+
     public constructor () {
+      this._PDFService = new PDFService()
       this._transporter = nodemailer.createTransport({
         host: "smtp.ethereal.email",
         port: 587,
@@ -29,9 +35,7 @@ class MailerService {
 
       cron.schedule("* * * * *", () => {
         signale.info("Sending email report")
-        this.sendMail("iacapuca@gmail.com", "Email test", "Testando envio do email").then((msg) => {
-          console.log(msg);
-        })
+        this.sendMail("iacapuca@gmail.com", "Email test", "Testando envio do email")
       })
     }
 
@@ -39,6 +43,7 @@ class MailerService {
       this.mailOptions.to = to
       this.mailOptions.subject = subject
       this.mailOptions.text = content
+      this.mailOptions.attachments = [{ filename: "report.pdf", content: await this._PDFService.generateReport() }]
 
       return new Promise<void>((resolve: (msg: any) => void,
         reject: (err: Error) => void) => {

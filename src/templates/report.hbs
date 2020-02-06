@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Bicibot - Relatório</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="header-title" style="padding: 3rem 1.5rem;text-align: center;">
+    <h1>Relatório - Bicibot</h1>
+    </div>
+    <div class="table table-sm">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">_id</th>
+            <th scope="col">report_type</th>
+            <th scope="col">city</th>
+            <th scope="col">address</th>
+            <th scope="col">createdAt</th>
+            <th scope="col">description</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each reports}}
+            <tr>
+                <th scope="row">{{this._id}}</th>
+                <td>{{this.report_type}}</td>
+                <td>{{this.city}}</td>
+                <td>{{this.address}}</td>
+                <td>{{formatDate this.createdAt}}</td>
+                <td>{{this.description}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>
+</div>
+</body>
+</html>
