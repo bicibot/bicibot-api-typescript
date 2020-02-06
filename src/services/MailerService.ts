@@ -4,8 +4,6 @@ import sgMail from "@sendgrid/mail"
 import PDFService from "./PDFService"
 import moment from "moment"
 
-// TODO: Create Email facade and use OOP better practices on this Service
-
 class MailerService {
     protected sendGrid: any;
 
